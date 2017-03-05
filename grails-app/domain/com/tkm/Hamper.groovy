@@ -10,6 +10,8 @@ class Hamper implements Serializable, IEntity {
     String name
     String description1
     String description2
+    BigDecimal price
+    int quantity
     SortedSet<Product> products = new TreeSet<Product>()
 
     // IEntity
@@ -19,6 +21,10 @@ class Hamper implements Serializable, IEntity {
     Date lastUpdated
     String createdBy = '_SYSTEM_'
     String updatedBy = '_SYSTEM_'
+
+    static hasMany = [
+        products: Product,
+    ]
 
     static mapping = {
         table 'HAMPER'
@@ -30,7 +36,9 @@ class Hamper implements Serializable, IEntity {
         name(size: 1..100)
         description1(size: 1..200)
         description2(size: 1..200)
+        price(size: 1..20)
         products(nullable: true)
+        quantity(size: 1..20)
 
         // IEntity
         status()

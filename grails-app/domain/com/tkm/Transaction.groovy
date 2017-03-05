@@ -4,11 +4,12 @@ import com.tkm.IEntity
 import com.tkm.EntityStatus
 import com.tkm.PendingStatus
 
-class Cart implements Serializable, IEntity {
+class Transaction implements Serializable, IEntity {
 
     Long id
+    SecUser user
+    Cart cart
     BigDecimal totalAmount
-    SortedSet<Hamper> hampers = new TreeSet<Hamper>()
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -18,18 +19,15 @@ class Cart implements Serializable, IEntity {
     String createdBy = '_SYSTEM_'
     String updatedBy = '_SYSTEM_'
 
-    static hasMany = [
-        hampers: Hamper,
-    ]
-
     static mapping = {
         table 'CART'
         id generator:'sequence', params: [sequence: 'CART_SEQ']
-        hampers lazy: false
     }
 
     static constraints = {
-        hampers(nullable: true)
+        user()
+        cart()
+        totalAmount(size: 1..100)
 
         // IEntity
         status()

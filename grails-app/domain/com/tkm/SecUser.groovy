@@ -5,11 +5,13 @@ class SecUser implements Serializable {
     transient springSecurityService
 
     UserProfile userProfile
+    SortedSet<Transaction> transactions = new TreeSet<Transaction>()
 
     static transients = ['springSecurityService']
 
     static constraints = {
-        userProfile (nullable: false)
+        userProfile(nullable: false)
+        transactions(nullable: true)
     }
 
     Set<Role> getAuthorities() {
