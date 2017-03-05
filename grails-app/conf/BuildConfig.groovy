@@ -51,11 +51,13 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
+        compile "org.grails.plugins:asset-pipeline:2.13.1"
     }
 
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.54"
+        runtime ":resources:1.2.RC2"
 
         // plugins for the compile step
         compile ":scaffolding:2.1.2"

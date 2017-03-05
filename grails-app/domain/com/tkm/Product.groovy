@@ -4,14 +4,12 @@ import com.tkm.IEntity
 import com.tkm.EntityStatus
 import com.tkm.PendingStatus
 
-class UserProfile implements Serializable, IEntity {
+class Product implements Serializable, IEntity {
 
     Long id
     String name
-    String email
-    String address
-    String phoneNo
-    String password
+    String description1
+    String description2
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -22,16 +20,14 @@ class UserProfile implements Serializable, IEntity {
     String updatedBy = '_SYSTEM_'
 
     static mapping = {
-        table 'USER_PROFILE'
-        id generator:'sequence', params: [sequence: 'USER_PROFILE_SEQ']
+        table 'PRODUCT'
+        id generator:'sequence', params: [sequence: 'PRODUCT_SEQ']
     }
 
     static constraints = {
         name(size: 1..100)
-        email(size: 1..100)
-        address(size: 1..200)
-        phoneNo(size: 1..20)
-        password(size: 1..100)
+        description1(size: 1..200)
+        description2(size: 1..200)
 
         // IEntity
         status()

@@ -1,13 +1,10 @@
 package com.tkm
 
-class SecUser extends SecUserBase implements Serializable {
+class SecUser implements Serializable {
 
     transient springSecurityService
 
     UserProfile userProfile
-    SecUserTmp tmp
-
-    static embedded = ['tmp']
 
     static transients = ['springSecurityService']
 
