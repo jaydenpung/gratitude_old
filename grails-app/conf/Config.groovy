@@ -142,3 +142,8 @@ grails.plugin.springsecurity.interceptUrlMap = [
     '/**':               ['IS_AUTHENTICATED_ANONYMOUSLY']
 ]
 
+assets {
+    minifyJs = true
+    minifyCss = true
+    includes = ["fonts/*"]
+}
