@@ -1,4 +1,4 @@
-dataSource {
+/*dataSource {
     pooled = true
     dbCreate = ''
     dbCreate = 'update'
@@ -9,7 +9,7 @@ dataSource {
     username = "jay"
     password = "lovekarman"
     driverClassName = "oracle.jdbc.OracleDriver"
-}
+}*/
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = false
