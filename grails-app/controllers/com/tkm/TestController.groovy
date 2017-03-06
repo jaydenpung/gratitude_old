@@ -1,7 +1,5 @@
 package com.tkm
 
-import com.tkm.*
-
 class TestController {
     def test() {
         try {

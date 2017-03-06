@@ -8,8 +8,7 @@ class Product implements Serializable, IEntity {
 
     Long id
     String name
-    String description1
-    String description2
+    String description
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -26,8 +25,7 @@ class Product implements Serializable, IEntity {
 
     static constraints = {
         name(size: 1..100)
-        description1(size: 1..200)
-        description2(size: 1..200)
+        description(nullable: true, size: 1..1000)
 
         // IEntity
         status()

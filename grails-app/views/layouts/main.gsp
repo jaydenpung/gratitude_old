@@ -7,8 +7,15 @@
     <head>
         <asset:stylesheet src="bootstrap.min.css"/>
         <asset:stylesheet src="shop-homepage.css"/>
+        <asset:stylesheet src="tkm.css"/>
+        <asset:stylesheet src="bootstrapValidator.min.css"/>
+        <asset:stylesheet src="datatables.min.css"/>
+
+        <asset:javascript src="tkm.js"/>
         <asset:javascript src="jquery.js"/>
         <asset:javascript src="bootstrap.min.js"/>
+        <asset:javascript src="datatables.min.js"/>
+        <asset:javascript src="bootstrapValidator.min.js"/>
     </head>
     <body>
         <!-- Navigation -->
@@ -22,19 +29,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Start Bootstrap</a>
+                    <g:link class="navbar-brand" controller="dashboard" action="index"><g:message code="menuItem.home.label" /></g:link>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">About</a>
-                        </li>
-                        <li>
-                            <a href="#">Services</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
+                            <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label" /></g:link>
                         </li>
                     </ul>
                 </div>
@@ -47,7 +48,25 @@
             <div class="row">
                 <div class="col-md-10 col-lg-10 col-sm-12 col-xs-12">
                     <div class="auto-overflow">
-                        <g:layoutBody />
+                        <div class="container">
+                            <div class="row">
+
+                                <!-- Side Bar -->
+                                <div class="col-md-3">
+                                    <p class="lead">Shop Name</p>
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item">Category 1</a>
+                                        <a href="#" class="list-group-item">Category 2</a>
+                                        <a href="#" class="list-group-item">Category 3</a>
+                                    </div>
+                                </div>
+                                <!-- Page Content -->
+                                <div class="col-md-9">
+                                    <g:layoutBody />
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
