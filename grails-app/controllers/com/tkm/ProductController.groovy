@@ -92,10 +92,93 @@ class ProductController {
             )
 
             def rsp = productService.save(product)
-            status = true
+
+            if (rsp.errors) {
+                errorMessage = rsp.errors
+            }
+            else {
+                status = true
+            }
         }
         catch (Exception ex) {
             log.error("save() failed: ${ex.message}", ex)
+            errorMessage = ex.message
+        }
+
+        def result = [
+            status: status,
+            errorMessage: errorMessage
+        ]
+
+        render(result as JSON)
+    }
+
+    def edit(Long id) {
+        try {
+            def rsp = productService.getProductById(id)
+            def product = rsp.result
+
+            [ product: product ]
+        }
+        catch (Exception ex) {
+            log.error("edit() failed: ${ex.message}", ex)
+        }
+    }
+
+    def update() {
+        boolean status = false
+        def errorMessage
+
+        try {
+            def product = new Product(
+                name: params.name,
+                description: params.description
+            )
+            product.id = params.long('id')
+
+            def rsp = productService.update(product)
+
+            if (rsp.errors) {
+                errorMessage = rsp.errors
+            }
+            else {
+                status = true
+            }
+
+            [ product: product ]
+        }
+        catch (Exception ex) {
+            log.error("update() failed: ${ex.message}", ex)
+            errorMessage = ex.message
+        }
+
+        def result = [
+            status: status,
+            errorMessage: errorMessage
+        ]
+
+        render(result as JSON)
+    }
+
+    def delete() {
+        boolean status = false
+        def errorMessage
+
+        try {
+            def ids = params.list('id')*.toLong()
+
+            def rsp = productService.delete(ids)
+
+            if (rsp.errors) {
+                errorMessage = rsp.errors
+            }
+            else {
+                status = true
+            }
+        }
+        catch (Exception ex) {
+            log.error("delete() failed: ${ex.message}", ex)
+            status = false
             errorMessage = ex.message
         }
 

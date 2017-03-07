@@ -50,8 +50,8 @@
             <div class="col-sm-12">
                 <g:link controller="product" action="create">
                     <button type="button" class="btn btn-default"><g:message code="default.button.create.label"/></button>
-                    <g:field type="button" name="btnDelete" id="btnDelete" class="btn btn-default buttons" value="${message(code:'default.button.delete.label')}"></g:field>
                 </g:link>
+                <g:field type="button" name="btnDelete" id="btnDelete" class="btn btn-default buttons" value="${message(code:'default.button.delete.label')}" disabled="true"></g:field>
             </div>
           </div>
         </form>
@@ -102,10 +102,9 @@
                             var success = "${createLink(controller:'product', action:'list')}";
                             var id = $(this).attr('id');
                             var url;
-                            var data;
+                            var data = $('[name=id]').serialize();
                             if (id == 'btnDelete') {
                                 url = "${createLink(controller:'product', action:'delete')}";
-                                data = "id=" + $(this).attr('value');
                             }
 
                             callAjax(url, data, success, defaultError);
