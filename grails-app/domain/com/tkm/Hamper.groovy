@@ -8,8 +8,7 @@ class Hamper implements Serializable, IEntity {
 
     Long id
     String name
-    String description1
-    String description2
+    String description
     BigDecimal price
     int quantity
     SortedSet<Product> products = new TreeSet<Product>()
@@ -34,8 +33,7 @@ class Hamper implements Serializable, IEntity {
 
     static constraints = {
         name(size: 1..100)
-        description1(size: 1..200)
-        description2(size: 1..200)
+        description(size: 1..1000)
         price(size: 1..20)
         products(nullable: true)
         quantity(size: 1..20)

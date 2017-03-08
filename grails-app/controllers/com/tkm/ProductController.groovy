@@ -1,6 +1,8 @@
 package com.tkm
 
 import grails.converters.JSON
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 import com.tkm.Product
 import com.tkm.SearchContext
@@ -8,6 +10,8 @@ import com.tkm.SearchContext
 class ProductController {
 
     def productService
+    def imageService
+    def grailsApplication
 
     def list() {
         try {
@@ -82,35 +86,36 @@ class ProductController {
     }
 
     def save() {
-        boolean status = false
-        def errorMessage
-
         try {
+            def image = request.getFile('image')
+            def uploadRsp
+            if (image.size > 0) {
+                def storePath = grailsApplication.config.storage.imageFolder
+                uploadRsp = imageService.uploadImage(image, storePath)
+
+                if (uploadRsp.errors) {
+                    throw new Exception (uploadRsp.errors)
+                }
+            }
+
             def product = new Product(
                 name: params.name,
-                description: params.description
+                description: params.description,
+                image: uploadRsp?.result
             )
 
             def rsp = productService.save(product)
 
             if (rsp.errors) {
-                errorMessage = rsp.errors
-            }
-            else {
-                status = true
+                throw new Exception (rsp.errors)
             }
         }
         catch (Exception ex) {
             log.error("save() failed: ${ex.message}", ex)
-            errorMessage = ex.message
+            flash.errors = ex.message
         }
 
-        def result = [
-            status: status,
-            errorMessage: errorMessage
-        ]
-
-        render(result as JSON)
+        redirect(action: flash.errors? 'create' : 'list')
     }
 
     def edit(Long id) {
@@ -126,38 +131,36 @@ class ProductController {
     }
 
     def update() {
-        boolean status = false
-        def errorMessage
-
         try {
+            def image = request.getFile('image')
+            def uploadRsp
+            if (image.size > 0) {
+                def storePath = grailsApplication.config.storage.imageFolder
+                uploadRsp = imageService.uploadImage(image, storePath)
+
+                if (uploadRsp.errors) {
+                    throw new Exception (uploadRsp.errors)
+                }
+            }
+            //TODO: Allow remove picture
             def product = new Product(
                 name: params.name,
-                description: params.description
+                description: params.description,
+                image: uploadRsp?.result
             )
             product.id = params.long('id')
 
             def rsp = productService.update(product)
 
             if (rsp.errors) {
-                errorMessage = rsp.errors
+                throw new Exception (rsp.errors)
             }
-            else {
-                status = true
-            }
-
-            [ product: product ]
         }
         catch (Exception ex) {
             log.error("update() failed: ${ex.message}", ex)
-            errorMessage = ex.message
+            flash.error = ex.message
         }
-
-        def result = [
-            status: status,
-            errorMessage: errorMessage
-        ]
-
-        render(result as JSON)
+        redirect(action: flash.errors? 'create' : 'list', params: [ id: params.id ])
     }
 
     def delete() {

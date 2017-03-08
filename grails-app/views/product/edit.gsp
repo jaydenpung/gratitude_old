@@ -8,15 +8,28 @@
     <body>
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><g:message code="product.create.label" /></h1>
+                <h1 class="page-header"><g:message code="product.edit.label" /></h1>
             </div>
         </div>
         <g:render template="/shared/messages"/>
-        <form class="form-horizontal" role="form" name="editForm">
+        <g:form method="post" enctype="multipart/form-data"  action="update" name="editForm" class="form-horizontal" role="form">
             <input type="hidden" name="id" value="${product.id}">
             <div class="panel panel-default">
-                <div class="panel-heading"><g:message code="product.create.panel.label"/></div>
+                <div class="panel-heading"><g:message code="product.edit.panel.label"/></div>
                 <div class="panel-body">
+                    <%-- Image --%>
+                    <div class="form-group required">
+                        <label for="name" class="col-sm-2 control-label input-sm required"><g:message code="product.image.label" /></label>
+                        <div class="col-sm-3">
+                            <g:if test="${product.image}">
+                                <img src="${resource(file: product.image.path)}" height="300" width="400"/>
+                            </g:if>
+                            <g:else>
+                                <asset:image src="NoPicAvailable.png" height="300" width="400"/>
+                            </g:else>
+                            <input type="file" name="image" />
+                        </div>
+                    </div>
                     <%-- Name --%>
                     <div class="form-group required">
                         <label for="name" class="col-sm-2 control-label input-sm required"><g:message code="product.name.label" /></label>
@@ -37,9 +50,9 @@
                 <g:link controller="product" action="list">
                     <button type="button" class="btn btn-default"><g:message code="default.button.back.label"/></button>
                 </g:link>
-                <g:field type="button" name="btnUpdate" id="btnUpdate" class="btn btn-default buttons" value="${message(code:'default.button.update.label')}"></g:field>
+                <g:actionSubmit class="btn btn-default" action="update" value="${message(code: 'default.button.update.label')}" />
             </div>
-        </form>
+        </g:form>
 
         <script>
             $(document).ready(function() {
@@ -60,25 +73,6 @@
                                 }
                             }
                         }
-                    }
-                });
-
-                $(".buttons").off('click').on('click', function() {
-                    var validator = $('[name=editForm]').data('bootstrapValidator');
-                    validator.validate();
-                    if (validator.isValid()) {
-
-                        var defaultError = "${message(code: 'default.ajax.failed.error.message')}"
-                        var success = "${createLink(controller:'product', action:'list')}";
-                        var id = $(this).attr('id');
-                        var url;
-                        var data = $('[name=editForm]').serialize();
-
-                        if (id == 'btnUpdate') {
-                            url = "${createLink(controller:'product', action:'update')}";
-                        }
-
-                        callAjax(url, data, success, defaultError);
                     }
                 });
             });

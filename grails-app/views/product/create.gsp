@@ -12,7 +12,7 @@
             </div>
         </div>
         <g:render template="/shared/messages"/>
-        <form class="form-horizontal" role="form" name="addForm">
+        <g:form method="post" enctype="multipart/form-data"  action="save" name="addForm" class="form-horizontal" role="form">
             <div class="panel panel-default">
                 <div class="panel-heading"><g:message code="product.create.panel.label"/></div>
                 <div class="panel-body">
@@ -30,15 +30,22 @@
                             <g:textField class="form-control input-sm" name="description" maxlength="1000"/>
                         </div>
                     </div>
+                    <%-- Image --%>
+                    <div class="form-group">
+                        <label for="image" class="col-sm-2 control-label input-sm"><g:message code="product.image.label" /></label>
+                        <div class="col-sm-3">
+                            <input type="file" name="image" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-actions">
                 <g:link controller="product" action="list">
                     <button type="button" class="btn btn-default"><g:message code="default.button.back.label"/></button>
                 </g:link>
-                <g:field type="button" name="btnSave" id="btnSave" class="btn btn-default buttons" value="${message(code:'default.button.save.label')}"></g:field>
+                <g:actionSubmit class="btn btn-default" action="save" value="${message(code: 'default.button.save.label')}" />
             </div>
-        </form>
+        </g:form>
 
         <script>
             $(document).ready(function() {
@@ -59,25 +66,6 @@
                                 }
                             }
                         }
-                    }
-                });
-
-                $(".buttons").off('click').on('click', function() {
-                    var validator = $('[name=addForm]').data('bootstrapValidator');
-                    validator.validate();
-                    if (validator.isValid()) {
-
-                        var defaultError = "${message(code: 'default.ajax.failed.error.message')}"
-                        var success = "${createLink(controller:'product', action:'list')}";
-                        var id = $(this).attr('id');
-                        var url;
-                        var data = $('[name=addForm]').serialize();
-
-                        if (id == 'btnSave') {
-                            url = "${createLink(controller:'product', action:'save')}";
-                        }
-
-                        callAjax(url, data, success, defaultError);
                     }
                 });
             });

@@ -6,6 +6,8 @@ import com.tkm.SearchableField
 
 class ProductService {
 
+    def imageService
+
     final static fcn = [
         'like': 'like',
         'ilike': 'ilike',
@@ -99,12 +101,25 @@ class ProductService {
 
             product.name = updatedProduct.name
             product.description = updatedProduct.description
+
+            // replace image
+            if (product.image && updatedProduct.image) {
+                def imageRsp = imageService.deleteImage(product.image)
+                if (imageRsp.errors) {
+                    throw new Exception (imageRsp.errors)
+                }
+                product.image = updatedProduct.image
+            }
+            else if (updatedProduct.image) {
+                product.image = updatedProduct.image
+            }
+
             product.save(flush: true, failOnError: true)
 
             rsp.result = product
         }
         catch (Exception ex) {
-            log.error("getProductById() failed: ${ex.message}", ex)
+            log.error("update() failed: ${ex.message}", ex)
             rsp.errors = ex.message
         }
         return rsp
@@ -119,6 +134,12 @@ class ProductService {
             }
 
             products.each { product ->
+                if (product.image) {
+                    def imageRsp = imageService.deleteImage(product.image)
+                    if (imageRsp.errors) {
+                        throw new Exception (imageRsp.errors)
+                    }
+                }
                 product.status = EntityStatus.DELETED
                 product.save(flush: true, failOnError: true)
             }

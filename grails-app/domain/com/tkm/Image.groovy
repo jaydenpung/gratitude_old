@@ -4,12 +4,12 @@ import com.tkm.IEntity
 import com.tkm.EntityStatus
 import com.tkm.PendingStatus
 
-class Product implements Serializable, IEntity {
+class Image implements Serializable, IEntity {
 
     Long id
     String name
-    String description
-    Image image
+    String path
+    String type
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -20,14 +20,14 @@ class Product implements Serializable, IEntity {
     String updatedBy = '_SYSTEM_'
 
     static mapping = {
-        table 'PRODUCT'
-        id generator:'sequence', params: [sequence: 'PRODUCT_SEQ']
+        table 'IMAGE'
+        id generator:'sequence', params: [sequence: 'IMAGE_SEQ']
     }
 
     static constraints = {
         name(size: 1..100)
-        description(nullable: true, size: 1..1000)
-        image(nullable: true)
+        path(size: 1..200)
+        type(nullable: true)
 
         // IEntity
         status()

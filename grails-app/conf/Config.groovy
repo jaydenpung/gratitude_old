@@ -147,3 +147,7 @@ assets {
     minifyCss = true
     includes = ["fonts/*"]
 }
+
+storage {
+    imageFolder = "/images/productImage"
+}
