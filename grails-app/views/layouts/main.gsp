@@ -5,16 +5,15 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
     <head>
+        <!-- FIXME: Clean up css ad js, change link resource to file -->
         <asset:stylesheet src="bootstrap.min.css"/>
         <asset:stylesheet src="shop-homepage.css"/>
         <asset:stylesheet src="tkm.css"/>
         <asset:stylesheet src="bootstrapValidator.min.css"/>
-        <asset:stylesheet src="datatables.min.css"/>
 
         <asset:javascript src="tkm.js"/>
         <asset:javascript src="jquery.js"/>
         <asset:javascript src="bootstrap.min.js"/>
-        <asset:javascript src="datatables.min.js"/>
         <asset:javascript src="bootstrapValidator.min.js"/>
     </head>
     <body>
@@ -36,6 +35,9 @@
                     <ul class="nav navbar-nav">
                         <li>
                             <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label" /></g:link>
+                        </li>
+                        <li>
+                            <g:link controller="hamper" action="list"><g:message code="menuItem.hamperMaintenance.label" /></g:link>
                         </li>
                     </ul>
                 </div>

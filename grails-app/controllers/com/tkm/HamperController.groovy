@@ -4,12 +4,12 @@ import grails.converters.JSON
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 
-import com.tkm.Product
+import com.tkm.Hamper
 import com.tkm.SearchContext
 
-class ProductController {
+class HamperController {
 
-    def productService
+    def hamperService
     def imageService
     def grailsApplication
 
@@ -49,16 +49,17 @@ class ProductController {
             searchContext.max = maxResults?.toInteger()
             searchContext.offset = offset?.toInteger()
 
-            def rsp = productService.search(searchContext)
+            def rsp = hamperService.search(searchContext)
 
             def rows = []
 
             if (rsp) {
-                rsp.results.each { product ->
+                rsp.results.each { hamper ->
                     rows << [
-                        id: product.id,
-                        name: product.name,
-                        description: product.description
+                        id: hamper.id,
+                        name: hamper.name,
+                        price: hamper.price,
+                        quantity: hamper.quantity
                     ]
                 }
             }
@@ -90,7 +91,7 @@ class ProductController {
             def image = request.getFile('image')
             def uploadRsp
             if (image.size > 0) {
-                def storePath = grailsApplication.config.storage.productImage
+                def storePath = grailsApplication.config.storage.hamperImage
                 uploadRsp = imageService.uploadImage(image, storePath)
 
                 if (uploadRsp.errors) {
@@ -98,13 +99,15 @@ class ProductController {
                 }
             }
 
-            def product = new Product(
+            def hamper = new Hamper(
                 name: params.name,
+                price: new BigDecimal(params.price),
+                quantity: params.long('quantity'),
                 description: params.description,
                 image: uploadRsp?.result
             )
 
-            def rsp = productService.save(product)
+            def rsp = hamperService.save(hamper)
 
             if (rsp.errors) {
                 throw new Exception (rsp.errors)
@@ -120,10 +123,10 @@ class ProductController {
 
     def edit(Long id) {
         try {
-            def rsp = productService.getProductById(id)
-            def product = rsp.result
+            def rsp = hamperService.getHamperById(id)
+            def hamper = rsp.result
 
-            [ product: product ]
+            [ hamper: hamper ]
         }
         catch (Exception ex) {
             log.error("edit() failed: ${ex.message}", ex)
@@ -135,7 +138,7 @@ class ProductController {
             def image = request.getFile('image')
             def uploadRsp
             if (image.size > 0) {
-                def storePath = grailsApplication.config.storage.productImage
+                def storePath = grailsApplication.config.storage.hamperImage
                 uploadRsp = imageService.uploadImage(image, storePath)
 
                 if (uploadRsp.errors) {
@@ -143,14 +146,16 @@ class ProductController {
                 }
             }
             //TODO: Allow remove picture
-            def product = new Product(
+            def hamper = new Hamper(
                 name: params.name,
+                price: new BigDecimal(params.price),
+                quantity: params.long('quantity'),
                 description: params.description,
                 image: uploadRsp?.result
             )
-            product.id = params.long('id')
+            hamper.id = params.long('id')
 
-            def rsp = productService.update(product)
+            def rsp = hamperService.update(hamper)
 
             if (rsp.errors) {
                 throw new Exception (rsp.errors)
@@ -168,7 +173,7 @@ class ProductController {
         try {
             def ids = params.list('id')*.toLong()
 
-            def rsp = productService.delete(ids)
+            def rsp = hamperService.delete(ids)
 
             if (rsp.errors) {
                 throw new Exception (rsp.errors)

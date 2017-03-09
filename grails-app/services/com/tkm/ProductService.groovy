@@ -56,7 +56,7 @@ class ProductService {
             rsp.results = resultList
         }
         catch (Exception ex) {
-            log.error("searchProducts() failed: ${ex.message}", ex)
+            log.error("search() failed: ${ex.message}", ex)
             rsp.errors = ex.message
         }
         return rsp
@@ -82,6 +82,10 @@ class ProductService {
                 ne('status', EntityStatus.DELETED)
             }[0]
 
+            if (!product) {
+                throw new Exception ("Error getting product with id: ${id}")
+            }
+
             rsp.result = product
         }
         catch (Exception ex) {
@@ -98,6 +102,10 @@ class ProductService {
                 eq('id', updatedProduct.id)
                 ne('status', EntityStatus.DELETED)
             }[0]
+
+            if (!product) {
+                throw new Exception ("Error getting product with id: ${updatedProduct.id}")
+            }
 
             product.name = updatedProduct.name
             product.description = updatedProduct.description
@@ -131,6 +139,11 @@ class ProductService {
             def products = Product.withCriteria {
                 inList('id', ids)
                 ne('status', EntityStatus.DELETED)
+            }
+
+            def invalidIds = ids - products?.id
+            if (invalidIds) {
+                throw new Exception ("Unable to get products with id: ${invalidIds}")
             }
 
             products.each { product ->

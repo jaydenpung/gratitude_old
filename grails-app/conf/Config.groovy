@@ -149,5 +149,6 @@ assets {
 }
 
 storage {
-    imageFolder = "/images/productImage"
+    productImage = "/images/productImage"
+    hamperImage = "/images/hamperImage"
 }

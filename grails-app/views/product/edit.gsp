@@ -33,15 +33,15 @@
                     <%-- Name --%>
                     <div class="form-group required">
                         <label for="name" class="col-sm-2 control-label input-sm required"><g:message code="product.name.label" /></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <g:textField class="form-control input-sm" name="name" maxlength="100" value="${product.name}"/>
                         </div>
                     </div>
                     <%-- Description --%>
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label input-sm"><g:message code="product.description.label" /></label>
-                        <div class="col-sm-3">
-                            <g:textField class="form-control input-sm" name="description" maxlength="1000" value="${product.description}"/>
+                        <div class="col-sm-8">
+                            <g:textArea class="form-control input-sm" name="description" rows="7" maxlength="1000" value="${product.description}"/>
                         </div>
                     </div>
                 </div>
@@ -53,10 +53,8 @@
                 <g:actionSubmit class="btn btn-default" action="update" value="${message(code: 'default.button.update.label')}" />
             </div>
         </g:form>
-
         <script>
             $(document).ready(function() {
-
                 $('[name=editForm]').bootstrapValidator({
                     excluded: ':disabled',
                     message: 'This value is not valid',

@@ -9,9 +9,11 @@ class Hamper implements Serializable, IEntity {
     Long id
     String name
     String description
+    Image image
     BigDecimal price
-    int quantity
+    Long quantity
     SortedSet<Product> products = new TreeSet<Product>()
+    boolean enabled = true
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -33,10 +35,12 @@ class Hamper implements Serializable, IEntity {
 
     static constraints = {
         name(size: 1..100)
-        description(size: 1..1000)
+        description(size: 1..100000)
         price(size: 1..20)
         products(nullable: true)
         quantity(size: 1..20)
+        enabled()
+        image(nullable: true)
 
         // IEntity
         status()

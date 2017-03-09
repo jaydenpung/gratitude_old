@@ -16,25 +16,25 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><g:message code="product.create.panel.label"/></div>
                 <div class="panel-body">
+                    <%-- Image --%>
+                    <div class="form-group">
+                        <label for="image" class="col-sm-2 control-label input-sm"><g:message code="product.image.label" /></label>
+                        <div class="col-sm-3">
+                            <input type="file" name="image" />
+                        </div>
+                    </div>
                     <%-- Name --%>
                     <div class="form-group required">
                         <label for="name" class="col-sm-2 control-label input-sm required"><g:message code="product.name.label" /></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <g:textField class="form-control input-sm" name="name" maxlength="100"/>
                         </div>
                     </div>
                     <%-- Description --%>
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label input-sm"><g:message code="product.description.label" /></label>
-                        <div class="col-sm-3">
-                            <g:textField class="form-control input-sm" name="description" maxlength="1000"/>
-                        </div>
-                    </div>
-                    <%-- Image --%>
-                    <div class="form-group">
-                        <label for="image" class="col-sm-2 control-label input-sm"><g:message code="product.image.label" /></label>
-                        <div class="col-sm-3">
-                            <input type="file" name="image" />
+                        <div class="col-sm-8">
+                            <g:textArea class="form-control input-sm" name="description" rows="7" maxlength="1000"/>
                         </div>
                     </div>
                 </div>
