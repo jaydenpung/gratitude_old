@@ -2,12 +2,17 @@ package com.tkm
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import grails.util.Holders
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.Files
 
 import com.tkm.Hamper
 import com.tkm.SearchContext
 import com.tkm.SearchableField
 
 class ImageService {
+
+    def grailsApplication
 
     final static fcn = [
         'like': 'like',
@@ -84,6 +89,40 @@ class ImageService {
         }
         catch (Exception ex) {
             log.error("deleteImage() failed: ${ex.message}", ex)
+            rsp.errors = ex.message
+        }
+        return rsp
+    }
+
+    def saveImage(String imagePath) {
+        def rsp = [:]
+        try {
+            def servletContext = Holders.getServletContext()
+            def storePath = grailsApplication.config.storage.hamperImage
+            def generatedImageName = java.util.UUID.randomUUID().toString() + ".png"
+
+            def newFilePath = storePath + "/" + generatedImageName
+
+            def relativePath = servletContext.getRealPath(imagePath)
+            def newRelativePath = servletContext.getRealPath(newFilePath)
+
+            def fileEx = new File(relativePath)
+            def fileDest = new File(newRelativePath)
+
+            def fileExPath = fileEx.toPath()
+            def fileDestPath = fileDest.toPath()
+
+            Files.copy(fileExPath, fileDestPath)
+
+            def image = new Image(
+                name: generatedImageName,
+                path: newFilePath
+            ).save(flush: true, failOnError: true)
+
+            rsp.result = image
+        }
+        catch (Exception ex) {
+            log.error("saveImage() failed: ${ex.message}", ex)
             rsp.errors = ex.message
         }
         return rsp

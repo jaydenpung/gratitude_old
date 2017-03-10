@@ -17,4 +17,8 @@ grails-*-*.zip.sha1
 src/docs/*.{pdf,html}
 ignored
 *.tld
-web-app/*
+web-app/css/*
+web-app/images/*
+web-app/js/*
+web-app/META-INF/*
+web-app/WEB-INF/*

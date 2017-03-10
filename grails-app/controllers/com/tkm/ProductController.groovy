@@ -1,8 +1,6 @@
 package com.tkm
 
 import grails.converters.JSON
-import org.springframework.web.multipart.commons.CommonsMultipartFile
-import org.springframework.web.multipart.MultipartHttpServletRequest
 
 import com.tkm.Product
 import com.tkm.SearchContext
