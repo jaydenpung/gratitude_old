@@ -46,6 +46,13 @@
                             <g:textField class="form-control input-sm" name="quantity" maxlength="20"/>
                         </div>
                     </div>
+                    <%-- Short Description --%>
+                    <div class="form-group">
+                        <label for="shortDescription" class="col-sm-2 control-label input-sm"><g:message code="hamper.shortDescription.label" /></label>
+                        <div class="col-sm-5">
+                            <textarea rows="4" class="form-control input-sm" name="shortDescription" maxlength="150" row="4"></textarea>
+                        </div>
+                    </div>
                     <%-- Description --%>
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label input-sm"><g:message code="hamper.description.label" /></label>
@@ -65,9 +72,7 @@
                 </div>
             </div>
             <div class="form-actions">
-                <g:link controller="hamper" action="list">
-                    <button type="button" class="btn btn-default"><g:message code="default.button.back.label"/></button>
-                </g:link>
+                <a href="${createLink(controller:'hamper', action: 'list')}" class="btn btn-default"><g:message code="default.button.back.label"/></a>
                 <g:actionSubmit class="btn btn-default" action="save" value="${message(code: 'default.button.save.label')}" />
             </div>
         </g:form>

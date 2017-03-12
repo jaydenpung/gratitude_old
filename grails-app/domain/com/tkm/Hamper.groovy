@@ -8,6 +8,7 @@ class Hamper implements Serializable, IEntity {
 
     Long id
     String name
+    String shortDescription
     String description
     Image image
     BigDecimal price
@@ -35,7 +36,8 @@ class Hamper implements Serializable, IEntity {
 
     static constraints = {
         name(size: 1..100)
-        description(size: 1..100000)
+        shortDescription(nullable: true, size: 1..150)
+        description(nullable: true, size: 1..100000)
         price(size: 1..20)
         products(nullable: true)
         quantity(size: 1..20)

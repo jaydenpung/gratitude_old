@@ -51,9 +51,7 @@
             </div>
             <div class="row">
             <div class="col-sm-12">
-                <g:link controller="hamper" action="create">
-                    <button type="button" class="btn btn-default"><g:message code="default.button.create.label"/></button>
-                </g:link>
+                <a href="${createLink(controller:'hamper', action: 'create')}" class="btn btn-default"><g:message code="default.button.create.label"/></a>
                 <g:actionSubmit class="btn btn-default buttons" action="delete" value="${message(code: 'default.button.delete.label')}" disabled="true"/>
             </div>
           </div>
@@ -68,6 +66,7 @@
                     "serverSide": true,
                     "searching": false,
                     "bLengthChange": false,
+                    "order": [[ 1, "asc" ]],
                     "ajax": {
                         url: "${createLink(controller:'hamper', action: 'search')}",
                         "data": function ( d ) {

@@ -47,9 +47,7 @@
                 </div>
             </div>
             <div class="form-actions">
-                <g:link controller="product" action="list">
-                    <button type="button" class="btn btn-default"><g:message code="default.button.back.label"/></button>
-                </g:link>
+                <a href="${createLink(controller:'product', action: 'list')}" class="btn btn-default"><g:message code="default.button.back.label"/></a>
                 <g:actionSubmit class="btn btn-default" action="update" value="${message(code: 'default.button.update.label')}" />
             </div>
         </g:form>

@@ -149,6 +149,7 @@ class HamperService {
             }
 
             hamper.name = updatedHamper.name
+            hamper.shortDescription = updatedHamper.shortDescription
             hamper.description = updatedHamper.description
             hamper.price = updatedHamper.price
             hamper.quantity = updatedHamper.quantity

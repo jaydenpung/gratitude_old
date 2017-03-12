@@ -101,6 +101,7 @@ class HamperController {
                 name: params.name,
                 price: new BigDecimal(params.price),
                 quantity: params.long('quantity'),
+                shortDescription: params.shortDescription,
                 description: params.description,
                 image: uploadRsp?.result
             )
@@ -148,6 +149,7 @@ class HamperController {
                 name: params.name,
                 price: new BigDecimal(params.price),
                 quantity: params.long('quantity'),
+                shortDescription: params.shortDescription,
                 description: params.description,
                 image: uploadRsp?.result
             )
@@ -182,5 +184,17 @@ class HamperController {
             flash.errors = ex.message
         }
         redirect(action: 'list')
+    }
+
+    def view(Long id) {
+        try {
+            def rsp = hamperService.getHamperById(id)
+            def hamper = rsp.result
+
+            [ hamper: hamper ]
+        }
+        catch (Exception ex) {
+            log.error("view() failed: ${ex.message}", ex)
+        }
     }
 }
