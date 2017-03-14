@@ -11,7 +11,11 @@
                 </tr>
             </thead>
             <tbody>
-                <g:each var="product" in="${products}">
+                <g:if test="${products.isEmpty()}">
+                    <td colspan="5" class="tkmCenter">No items in your cart.</td>
+                </g:if>
+                <g:else>
+                    <g:each var="product" in="${products}">
                     <tr>
                         <td class="col-sm-8 col-md-6">
                             <div class="media">
@@ -38,42 +42,43 @@
                             </button>
                         </td>
                     </tr>
-                </g:each>
-                <%-- SubTotals and Totals --%>
-                <tr>
-                    <td>   </td>
-                    <td>   </td>
-                    <td>   </td>
-                    <td><h5>Subtotal</h5></td>
-                    <td class="text-right"><h5><strong>RM ${totalAmount}</strong></h5></td>
-                </tr>
-                <tr>
-                    <td>   </td>
-                    <td>   </td>
-                    <td>   </td>
-                    <td><h5>Estimated shipping</h5></td>
-                    <td class="text-right"><h5><strong>RM 0.00</strong></h5></td>
-                </tr>
-                <tr>
-                    <td>   </td>
-                    <td>   </td>
-                    <td>   </td>
-                    <td><h3>Total</h3></td>
-                    <td class="text-right"><h3><strong>RM ${totalAmount}</strong></h3></td>
-                </tr>
-                <tr>
-                    <td>   </td>
-                    <td>   </td>
-                    <td>   </td>
-                    <td>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                    </button></td>
-                    <td>
-                    <button type="button" class="btn btn-success">
-                        Checkout <span class="glyphicon glyphicon-play"></span>
-                    </button></td>
-                </tr>
+                    </g:each>
+                    <%-- SubTotals and Totals --%>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>RM ${totalAmount}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Estimated shipping</h5></td>
+                        <td class="text-right"><h5><strong>RM 0.00</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>RM ${totalAmount}</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                        </button></td>
+                        <td>
+                        <button type="button" class="btn btn-success">
+                            Checkout <span class="glyphicon glyphicon-play"></span>
+                        </button></td>
+                    </tr>
+                </g:else>
             </tbody>
         </table>
     </div>
@@ -81,9 +86,21 @@
 
 <script>
     $("#removeCartBtn").click(function() {
-        var item = $(this).closest("tr")   // Finds the closest row <tr> 
+        var quantity = $(this).closest("tr")   // Finds the closest row <tr> 
                        .find(".cartQuantity")     // Gets a descendent with class="nr"
                        .text();         // Retrieves the text within <td>
-       alert(item)
+        var hamperId = $(this).closest("tr")
+                       .find(".cartQuantity")
+                       .text();
+
+
+        $.ajax({
+            url: "${createLink(controller: 'hamper', action: 'removeFromCart')}",
+            type: 'POST',
+            data: { id: hamperId, quantity: quantity },
+            success: function(result) {
+                $('#cartModal').modal('show');
+            }
+        });
     });
 </script>
