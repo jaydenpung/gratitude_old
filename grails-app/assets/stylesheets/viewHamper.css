@@ -141,6 +141,15 @@ img {
 .tooltip-inner {
   padding: 1.3em; }
 
+.card .quantity {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+.input-number {
+  text-align: center;
+}
+
 @-webkit-keyframes opacity {
   0% {
     opacity: 0;

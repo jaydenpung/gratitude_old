@@ -68,6 +68,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.1"
 
         compile ':spring-security-core:2.0-RC4'
+        compile "org.grails.plugins:shopping-cart:0.8.2"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.7.4"

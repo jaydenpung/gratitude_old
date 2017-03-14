@@ -253,4 +253,22 @@ class HamperService {
         }
         return rsp
     }
+
+    def getHampersInCart(List<Long> shoppingItemIds) {
+        def rsp = [:]
+        try {
+            def hampers = Hamper.withCriteria {
+                shoppingItem {
+                    inList('id', shoppingItemIds)
+                }
+            }
+
+            rsp.results = hampers
+        }
+        catch (Exception ex) {
+            log.error("getHampersInCart() failed: ${ex.message}", ex)
+            rsp.errors = ex.message
+        }
+        return rsp
+    }
 }

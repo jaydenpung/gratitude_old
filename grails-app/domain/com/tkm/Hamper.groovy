@@ -1,10 +1,13 @@
 package com.tkm
 
+import com.metasieve.shoppingcart.IShoppable
+import com.metasieve.shoppingcart.ShoppingItem
+
 import com.tkm.IEntity
 import com.tkm.EntityStatus
 import com.tkm.PendingStatus
 
-class Hamper implements Serializable, IEntity {
+class Hamper implements Serializable, IEntity, IShoppable {
 
     Long id
     String name
@@ -15,6 +18,8 @@ class Hamper implements Serializable, IEntity {
     Long quantity
     SortedSet<Product> products = new TreeSet<Product>()
     boolean enabled = true
+
+    ShoppingItem shoppingItem
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -32,6 +37,7 @@ class Hamper implements Serializable, IEntity {
         table 'HAMPER'
         id generator:'sequence', params: [sequence: 'HAMPER_SEQ']
         products lazy: false
+        description type: 'text'
     }
 
     static constraints = {
@@ -43,6 +49,7 @@ class Hamper implements Serializable, IEntity {
         quantity(size: 1..20)
         enabled()
         image(nullable: true)
+        shoppingItem(nullable: true)
 
         // IEntity
         status()

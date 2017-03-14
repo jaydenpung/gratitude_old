@@ -28,18 +28,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <g:link class="navbar-brand" controller="dashboard" action="index"><g:message code="menuItem.home.label" /></g:link>
+                    <g:link class="navbar-brand" controller="dashboard" action="index"><g:message code="menuItem.home.label"/></g:link>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse col-md-10" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label" /></g:link>
+                            <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label"/></g:link>
                         </li>
                         <li>
-                            <g:link controller="hamper" action="list"><g:message code="menuItem.hamperMaintenance.label" /></g:link>
+                            <g:link controller="hamper" action="list"><g:message code="menuItem.hamperMaintenance.label"/></g:link>
                         </li>
                     </ul>
+                </div>
+                <div class="pull-right col-md-2">
+                    <button class="btn btn-info btn-lg" id="viewCartBtn" data-toggle="modal" data-target="#cartModal">View Cart</button>
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
@@ -74,6 +77,8 @@
             </div>
         </div>
 
+        <g:render template="/shared/cartModal"/>
+
         <!-- /.container -->
         <div class="container">
             <hr>
@@ -87,5 +92,25 @@
             </footer>
         </div>
         <!-- /.container -->
+        <script>
+            $(document).ready(function(){
+                $('#cartModal').on('shown.bs.modal', function() {
+                    var activeLink = $(this);
+                    var modal = $("#cartModal");
+                    var target = $("#cartModalBody");
+                    var ajaxUrl = "${createLink(controller: 'dashboard', action: 'getCartList')};"
+
+                    $.get(ajaxUrl)
+                    .done(function(ajaxData){
+                        target.html(ajaxData);
+                        modal.modal('show');
+                    })
+                    .fail(function(){
+                        alert("Something went wrong");
+                    });
+                });
+            });
+        </script>
+
     </body>
 </html>

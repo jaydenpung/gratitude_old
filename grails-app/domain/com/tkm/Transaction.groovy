@@ -8,7 +8,6 @@ class Transaction implements Serializable, IEntity {
 
     Long id
     SecUser user
-    Cart cart
     BigDecimal totalAmount
 
     // IEntity
@@ -26,7 +25,6 @@ class Transaction implements Serializable, IEntity {
 
     static constraints = {
         user()
-        cart()
         totalAmount(size: 1..100)
 
         // IEntity

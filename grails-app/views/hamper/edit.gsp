@@ -14,7 +14,7 @@
             </div>
         </div>
         <g:render template="/shared/messages"/>
-        <g:form method="post" enctype="multipart/form-data"  action="save" name="addForm" class="form-horizontal" role="form">
+        <g:form method="post" enctype="multipart/form-data"  action="save" name="editForm" class="form-horizontal" role="form">
             <input type="hidden" name="id" value="${hamper.id}">
             <div class="panel panel-default">
                 <div class="panel-heading"><g:message code="hamper.edit.panel.label"/></div>
@@ -90,7 +90,7 @@
         <script>
             $(document).ready(function() {
 
-                $('[name=addForm]').bootstrapValidator({
+                $('[name=editForm]').bootstrapValidator({
                     excluded: ':disabled',
                     message: 'This value is not valid',
                     feedbackIcons: {

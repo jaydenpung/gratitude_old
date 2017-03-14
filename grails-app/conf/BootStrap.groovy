@@ -146,7 +146,7 @@ class BootStrap {
                     name: data.name,
                     price: data.price,
                     quantity: data.quantity,
-                    shortDescription: data.shortDescription,
+                    shortDescription: data.description,
                     description: data.description,
                     image: uploadRsp?.result
                 )

@@ -44,30 +44,31 @@
         </div>
 
         <div id="products" class="row list-group">
-                <g:each var="hamper" in="${hampers}">
-                    <div class="item  col-xs-4 col-lg-4">
-                        <div class="thumbnail">
-                            <a href="${createLink(controller:'hamper', action: 'view', params: [id: hamper.id])}">
-                                <img src="${resource(file: hamper.image.path)}" style="max-height:250px; min-height:250px"/>
-                            </a>
-                            <div class="caption">
-                                <h4 class="group inner list-group-item-heading">
-                                    <a href="${createLink(controller:'hamper', action: 'view', params: [id: hamper.id])}">${hamper.name}</a>
-                                </h4>
-                                <p class="group inner list-group-item-text">${hamper.shortDescription}</p>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-6">
-                                        <p class="lead">RM ${hamper.price}</p>
-                                    </div>
-                                    <div class="col-xs-12 col-md-6">
-                                        <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
-                                    </div>
+            <g:each var="hamper" in="${hampers}">
+                <input type="hidden" name="id" value="${hamper.id}"/>
+                <div class="item  col-xs-4 col-lg-4">
+                    <div class="thumbnail">
+                        <a href="${createLink(controller:'hamper', action: 'view', params: [id: hamper.id])}">
+                            <img src="${resource(file: hamper.image.path)}" style="max-height:250px; min-height:250px"/>
+                        </a>
+                        <div class="caption">
+                            <h4 class="group inner list-group-item-heading">
+                                <a href="${createLink(controller:'hamper', action: 'view', params: [id: hamper.id])}">${hamper.name}</a>
+                            </h4>
+                            <p class="group inner list-group-item-text">${hamper.shortDescription}</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <p class="lead">RM ${hamper.price}</p>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <a class="btn btn-success" href="${createLink(controller:'hamper', action: 'view', params: [id: hamper.id])}">View Details</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </g:each>
-            </div>
+                </div>
+            </g:each>
+        </div>
     </body>
 
 </html>

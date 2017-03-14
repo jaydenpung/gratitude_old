@@ -10,6 +10,7 @@
 
         <g:render template="/shared/messages"/>
         <div class="card">
+            <input type="hidden" value="${hamper.id}" id="id">
             <div class="container-fluid">
                 <div class="wrapper row">
                     <div class="preview col-md-6">
@@ -59,8 +60,22 @@
                             <span class="color green"></span>
                             <span class="color blue"></span>
                         </h5>
-                        <div class="action">
-                            <button class="add-to-cart btn btn-default" type="button">add to cart</button>
+                        <%-- Quantity --%>
+                        <div class="input-group quantity">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity" disabled>
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quantity">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div>
+                            <button class="btn btn-success" type="button" id="addCartBtn">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -69,6 +84,20 @@
                 ${raw(hamper.description)}
             </div>
     </div>
+
+    <script>
+
+        $("#addCartBtn").click(function() {
+            $.ajax({
+                url: "${createLink(controller: 'hamper', action: 'addToCart')}",
+                type: 'POST',
+                data: { id: $("#id").val(), quantity: $("#quantity").val() },
+                success: function(result) {
+                    $('#cartModal').modal('show');
+                }
+            });
+        });
+    </script>
 
     </body>
 

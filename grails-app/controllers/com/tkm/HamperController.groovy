@@ -10,6 +10,7 @@ class HamperController {
     def hamperService
     def imageService
     def grailsApplication
+    def shoppingCartService
 
     def list() {
         try {
@@ -196,5 +197,42 @@ class HamperController {
         catch (Exception ex) {
             log.error("view() failed: ${ex.message}", ex)
         }
+    }
+
+    def addToCart() {
+        def result
+        try {
+            def hamperId = params.long('id')
+            def quantity = params.int('quantity')?: 1
+            log.info ">>>>>>>>>>>>>" + quantity
+
+            def hamperRsp = hamperService.getHamperById(hamperId)
+            def hamper = hamperRsp.result
+
+            def rsp = shoppingCartService.addToShoppingCart(hamper, quantity)
+            result = rsp.items
+        }
+        catch (Exception ex) {
+            log.error("addToCart() failed: ${ex.message}", ex)
+        }
+        render result
+    }
+
+    def removeFromCart() {
+        def result
+        try {
+            def hamperId = params.long('id')
+            def quantity = params.int('quantity')?: 1
+
+            def hamperRsp = hamperService.getHamperById(hamperId)
+            def hamper = hamperRsp.result
+
+            def rsp = shoppingCartService.removeFromShoppingCart(hamper, quantity)
+            result = rsp.items
+        }
+        catch (Exception ex) {
+            log.error("removeFromCart() failed: ${ex.message}", ex)
+        }
+        render result
     }
 }
