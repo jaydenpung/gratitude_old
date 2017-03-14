@@ -204,7 +204,6 @@ class HamperController {
         try {
             def hamperId = params.long('id')
             def quantity = params.int('quantity')?: 1
-            log.info ">>>>>>>>>>>>>" + quantity
 
             def hamperRsp = hamperService.getHamperById(hamperId)
             def hamper = hamperRsp.result

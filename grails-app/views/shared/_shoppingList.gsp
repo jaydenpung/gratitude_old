@@ -24,7 +24,7 @@
                             </div>
                         </td>
                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <g:field type="number" name="cartQuantity" value="${product.cartQuantity}"/>
+                            <g:field type="number" class="cartQuantity" name="cartQuantity" value="${product.cartQuantity}"/>
                         </td>
                         <td class="col-sm-1 col-md-1 text-center text-nowrap">
                             <strong>RM ${product.price}</strong>
@@ -33,7 +33,7 @@
                             <strong>RM ${product.totalPrice}</strong>
                         </td>
                         <td class="col-sm-1 col-md-1">
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" id="removeCartBtn">
                                 <span class="glyphicon glyphicon-remove"></span> Remove
                             </button>
                         </td>
@@ -78,3 +78,12 @@
         </table>
     </div>
 </div>
+
+<script>
+    $("#removeCartBtn").click(function() {
+        var item = $(this).closest("tr")   // Finds the closest row <tr> 
+                       .find(".cartQuantity")     // Gets a descendent with class="nr"
+                       .text();         // Retrieves the text within <td>
+       alert(item)
+    });
+</script>

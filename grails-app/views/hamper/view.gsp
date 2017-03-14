@@ -86,7 +86,6 @@
     </div>
 
     <script>
-
         $("#addCartBtn").click(function() {
             $.ajax({
                 url: "${createLink(controller: 'hamper', action: 'addToCart')}",

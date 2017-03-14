@@ -11,10 +11,10 @@
         <asset:stylesheet src="tkm.css"/>
         <asset:stylesheet src="bootstrapValidator.min.css"/>
 
-        <asset:javascript src="tkm.js"/>
         <asset:javascript src="jquery.js"/>
         <asset:javascript src="bootstrap.min.js"/>
         <asset:javascript src="bootstrapValidator.min.js"/>
+        <asset:javascript src="tkm.js"/>
     </head>
     <body>
         <!-- Navigation -->
