@@ -61,35 +61,35 @@ function selectAllCheckBox(checkBoxAll, checkBoxes, buttons) {
 
 window.onload = function() {
     $('.btn-number').click(function(e){
-            e.preventDefault();
+        e.preventDefault();
 
-            fieldName = $(this).attr('data-field');
-            type      = $(this).attr('data-type');
-            var input = $("input[name='"+fieldName+"']");
-            var currentVal = parseInt(input.val());
-            if (!isNaN(currentVal)) {
-                if (type == 'minus') {
+        fieldName = $(this).attr('data-field');
+        type      = $(this).attr('data-type');
+        var input = $("input[name='"+fieldName+"']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
 
-                    if (currentVal > input.attr('min')) {
-                        input.val(currentVal - 1).change();
-                    }
-                    if (parseInt(input.val()) == input.attr('min')) {
-                        $(this).attr('disabled', true);
-                    }
-
-                } else if (type == 'plus') {
-
-                    if (currentVal < input.attr('max')) {
-                        input.val(currentVal + 1).change();
-                    }
-                    if (parseInt(input.val()) == input.attr('max')) {
-                        $(this).attr('disabled', true);
-                    }
-
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
                 }
-            } else {
-                input.val(0);
+                if (parseInt(input.val()) == input.attr('min')) {
+                    $(this).attr('disabled', true);
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+                if (parseInt(input.val()) == input.attr('max')) {
+                    $(this).attr('disabled', true);
+                }
+
             }
+        } else {
+            input.val(0);
+        }
     });
 
     $('.input-number').focusin(function(){
@@ -131,5 +131,19 @@ window.onload = function() {
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
             e.preventDefault();
         }
+    });
+}
+
+function refreshSoppingList(ajaxUrl) {
+    var modal = $("#cartModal");
+    var target = $("#cartModalBody");
+
+    $.get(ajaxUrl)
+    .done(function(ajaxData){
+        target.html(ajaxData);
+        modal.modal('show');
+    })
+    .fail(function(){
+        alert("Something went wrong");
     });
 }

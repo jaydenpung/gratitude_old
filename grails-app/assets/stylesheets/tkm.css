@@ -68,3 +68,12 @@
 .tkmCenter {
     text-align: center;
 }
+
+.tkmSmallImage {
+    height: 150px;
+    width: 150px;
+}
+
+.quantityValue {
+  min-width: 50px;
+}

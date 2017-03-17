@@ -95,19 +95,8 @@
         <script>
             $(document).ready(function(){
                 $('#cartModal').on('shown.bs.modal', function() {
-                    var activeLink = $(this);
-                    var modal = $("#cartModal");
-                    var target = $("#cartModalBody");
                     var ajaxUrl = "${createLink(controller: 'dashboard', action: 'getCartList')};"
-
-                    $.get(ajaxUrl)
-                    .done(function(ajaxData){
-                        target.html(ajaxData);
-                        modal.modal('show');
-                    })
-                    .fail(function(){
-                        alert("Something went wrong");
-                    });
+                    refreshSoppingList(ajaxUrl);
                 });
             });
         </script>

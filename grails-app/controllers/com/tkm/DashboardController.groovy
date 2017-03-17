@@ -60,8 +60,11 @@ class DashboardController {
     def getCartList() {
         try {
             def shoppingItems = shoppingCartService.getItems()
-            def rsp = hamperService.getHampersInCart(shoppingItems.id)
-            def hampers = rsp.results
+            def rsp
+            if (shoppingItems) {
+                rsp = hamperService.getHampersInCart(shoppingItems.id)
+            }
+            def hampers = rsp?.results
 
             def products = []
 

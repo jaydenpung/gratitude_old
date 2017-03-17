@@ -67,7 +67,7 @@
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>
-                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="${hamper.quantity}">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quantity">
                                     <span class="glyphicon glyphicon-plus"></span>

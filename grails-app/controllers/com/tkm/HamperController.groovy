@@ -234,4 +234,30 @@ class HamperController {
         }
         render result
     }
+
+    def setShoppingItemQuantity() {
+        try {
+            def hamperId = params.long('id')
+            def newQuantity = params.int('quantity')
+
+            def hamperRsp = hamperService.getHamperById(hamperId)
+            def hamper = hamperRsp.result
+
+            def oldQuantity = shoppingCartService.getQuantity(hamper)
+            def quantity = newQuantity - oldQuantity
+            def rsp
+            if (quantity > 0) {
+                rsp = shoppingCartService.addToShoppingCart(hamper, quantity)
+            }
+            else {
+                quantity = -quantity
+                rsp = shoppingCartService.removeFromShoppingCart(hamper, quantity)
+            }
+
+            render quantity
+        }
+        catch (Exception ex) {
+            log.error("setShoppingItemQuantity() failed: ${ex.message}", ex)
+        }
+    }
 }
