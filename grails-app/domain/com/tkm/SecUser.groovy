@@ -1,17 +1,26 @@
 package com.tkm
 
-class SecUser implements Serializable {
+class SecUser {
 
     transient springSecurityService
 
+    String username
+    String password
+    boolean enabled = true
+    boolean accountExpired = false
+    boolean accountLocked = false
+    boolean passwordExpired = false
     UserProfile userProfile
-    SortedSet<Transaction> transactions = new TreeSet<Transaction>()
 
     static transients = ['springSecurityService']
 
     static constraints = {
-        userProfile(nullable: false)
-        transactions(nullable: true)
+        username blank: false, unique: true
+        password blank: false
+    }
+
+    static mapping = {
+        password column: '`password`'
     }
 
     Set<Role> getAuthorities() {

@@ -3,11 +3,16 @@ import grails.util.Environment
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import com.tkm.Hamper
+import com.tkm.Role
+import com.tkm.SecUser
+import com.tkm.SecUserRole
+import com.tkm.UserProfile
 
 class BootStrap {
 
     def grailsApplication
     def imageService
+    def springSecurityService
 
     def init = { servletContext ->
         switch (Environment.current) {
@@ -16,6 +21,12 @@ class BootStrap {
             case Environment.DEVELOPMENT:
                 if (Hamper.count() == 0) {
                     createDefaultHampers()
+                }
+                if (Role.count() == 0) {
+                    createDefaultRoles()
+                }
+                if (SecUser.count() == 0) {
+                    createDefaultSecUsers()
                 }
                 break
         }
@@ -157,6 +168,69 @@ class BootStrap {
         }
         catch (Exception ex) {
             log.error("createDefaultHampers() failed: ${ex.message}", ex)
+        }
+    }
+
+    def createDefaultRoles() {
+        try {
+            [
+                "ROLE_ADMIN"
+            ].each { role ->
+                new Role(
+                    authority: role
+                ).save(flush: true, failOnError: true)
+
+                log.info("Saved role: ${role}")
+            }
+        }
+        catch (Exception ex) {
+            log.error("createDefaultRoles() failed: ${ex.message}", ex)
+        }
+    }
+
+    def createDefaultSecUsers() {
+        try {
+            [
+                [
+                    name: "admin",
+                    email: "tkm@gmail.com",
+                    address: "Lot 42, Jalan Imbi, Desa Putin, 56000 Selangor",
+                    phoneNo: "0123456789",
+                    password: "password",
+                    roles: [
+                        "ROLE_ADMIN"
+                    ]
+                ]
+            ].each { rec ->
+                def userProfile = new UserProfile(
+                    name: rec.name,
+                    email: rec.email,
+                    address: rec.address,
+                    phoneNo: rec.phoneNo,
+                ).save(flush: true, failOnError: true)
+
+                def secUser = new SecUser(
+                    username: rec.name,
+                    password: rec.password,
+                    userProfile: userProfile,
+                ).save(flush: true, failOnError: true)
+
+                def roles = Role.withCriteria {
+                    inList('authority', rec.roles)
+                }
+
+                roles.each { role ->
+                    new SecUserRole(
+                        secUser: secUser,
+                        role: role
+                    ).save(flush: true, failOnError: true)
+                }
+
+                log.info("Saved user: ${userProfile.name} with roles: ${roles.authority}")
+            }
+        }
+        catch (Exception ex) {
+            log.error("createDefaultSecUsers() failed: ${ex.message}", ex)
         }
     }
 }

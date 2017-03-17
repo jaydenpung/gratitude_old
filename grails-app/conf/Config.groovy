@@ -152,3 +152,19 @@ storage {
     productImage = "/images/productImage"
     hamperImage = "/images/hamperImage"
 }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.tkm.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.tkm.SecUserRole'
+grails.plugin.springsecurity.authority.className = 'com.tkm.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+    '/':                              ['permitAll'],
+    '/index':                         ['permitAll'],
+    '/index.gsp':                     ['permitAll'],
+    '/assets/**':                     ['permitAll'],
+    '/**/js/**':                      ['permitAll'],
+    '/**/css/**':                     ['permitAll'],
+    '/**/images/**':                  ['permitAll'],
+    '/**/favicon.ico':                ['permitAll']
+]

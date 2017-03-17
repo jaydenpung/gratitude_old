@@ -11,7 +11,6 @@ class UserProfile implements Serializable, IEntity {
     String email
     String address
     String phoneNo
-    String password
 
     // IEntity
     EntityStatus status = EntityStatus.ACTIVE
@@ -31,7 +30,6 @@ class UserProfile implements Serializable, IEntity {
         email(size: 1..100)
         address(size: 1..200)
         phoneNo(size: 1..20)
-        password(size: 1..100)
 
         // IEntity
         status()

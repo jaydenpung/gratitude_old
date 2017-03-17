@@ -31,18 +31,30 @@
                     <g:link class="navbar-brand" controller="dashboard" action="index"><g:message code="menuItem.home.label"/></g:link>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse col-md-10" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label"/></g:link>
-                        </li>
-                        <li>
-                            <g:link controller="hamper" action="list"><g:message code="menuItem.hamperMaintenance.label"/></g:link>
-                        </li>
-                    </ul>
-                </div>
+                <sec:ifAllGranted roles="ROLE_ADMIN">
+                    <div class="collapse navbar-collapse col-md-10" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <g:link controller="product" action="list"><g:message code="menuItem.productMaintenance.label"/></g:link>
+                            </li>
+                            <li>
+                                <g:link controller="hamper" action="list"><g:message code="menuItem.hamperMaintenance.label"/></g:link>
+                            </li>
+                        </ul>
+                    </div>
+                </sec:ifAllGranted>
                 <div class="pull-right col-md-2">
                     <button class="btn btn-info btn-lg" id="viewCartBtn" data-toggle="modal" data-target="#cartModal">View Cart</button>
+                </div>
+                <div class="pull-right col-md-2">
+                    <sec:ifLoggedIn>
+                        <g:link controller="login" action="logout" class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-log-out"></span> <g:message code="menuItem.logout.label"/>
+                        </g:link>
+                    </sec:ifLoggedIn>
+                    <sec:ifNotLoggedIn>
+                        <g:link controller="login" action="index" class="btn btn-success"><g:message code="menuItem.login.label"/></g:link>
+                    </sec:ifNotLoggedIn>
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
@@ -64,6 +76,9 @@
                                         <a href="#" class="list-group-item">Category 2</a>
                                         <a href="#" class="list-group-item">Category 3</a>
                                     </div>
+                                    <sec:ifLoggedIn>
+                                        <p>Logged in as: <sec:username></sec:username></p>
+                                    </sec:ifLoggedIn>
                                 </div>
                                 <!-- Page Content -->
                                 <div class="col-md-9">

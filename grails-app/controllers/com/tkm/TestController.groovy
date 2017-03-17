@@ -1,17 +1,19 @@
 package com.tkm
 
+import com.tkm.*
+
 class TestController {
 
     def shoppingCartService
     def hamperService
+    def springSecurityService
+    def productService
 
     def test() {
         try {
-            def x = shoppingCartService.getItems()
-            log.info ">>>>>>>>>>>>>" + x.dump()
         }
-        catch(Exception ex) {
-            log.error("test() failed: ${ex.message}", ex)
+        catch (Exception ex) {
+            log.error("createDefaultSecUsers() failed: ${ex.message}", ex)
         }
     }
 }
